@@ -12,4 +12,14 @@ interface JamendoApi {
         @Query("order") order: String? = null,
     ): TrackDataDto
 
+    @GET(NetworkContract.TRACKS_DATA)
+    suspend fun getFeaturedTracks(
+        @Query("featured") featured: Boolean = true
+    ) : TrackDataDto
+
+    @GET(NetworkContract.TRACKS_DATA)
+    suspend fun getAcousticOnlyTracks(
+        @Query("acousticelectric") acel: String = "acoustic"
+    ) : TrackDataDto
+
 }
