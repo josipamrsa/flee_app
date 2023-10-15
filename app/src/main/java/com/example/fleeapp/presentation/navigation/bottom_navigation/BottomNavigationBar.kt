@@ -20,7 +20,7 @@ fun BottomNavigationBar(navController: NavHostController) {
         Screen.ListenMusicScreen,
         Screen.MusicPlayerScreen,
         Screen.ManagePlaylistsScreen
-        )
+    )
 
     var selectedItemIndex by rememberSaveable {
         mutableStateOf(0)

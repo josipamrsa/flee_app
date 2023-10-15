@@ -3,9 +3,11 @@ package com.example.fleeapp.presentation.homepage_feed
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.paddingFrom
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
@@ -47,7 +49,10 @@ fun HomepageFeedScreen(
         Text(
             text = "Popular weekly",
             style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(20.dp)
+            modifier = Modifier.padding(
+                top = 30.dp,
+                start = 20.dp
+            )
         )
 
         LazyRow(modifier = Modifier.fillMaxSize()) {
@@ -75,7 +80,5 @@ fun HomepageFeedScreen(
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
         }
-
-
     }
 }
