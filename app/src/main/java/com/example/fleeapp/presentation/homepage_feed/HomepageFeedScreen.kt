@@ -34,9 +34,11 @@ fun HomepageFeedScreen(
     navController: NavController,
     viewModel: HomepageFeedViewModel = hiltViewModel()
 ) {
-    val featuredTracks = viewModel.featuredTracks.value
-    val popularTracks = viewModel.popularTracks.value
-    val acousticOnlyTracks = viewModel.acousticOnlyTracks.value
+    val trackMap = mapOf(
+        "Featured" to viewModel.featuredTracks.value,
+        "Popular weekly" to viewModel.popularTracks.value,
+        "Acoustic corner" to viewModel.acousticOnlyTracks.value
+    )
 
     Column(
         modifier = Modifier
@@ -46,14 +48,10 @@ fun HomepageFeedScreen(
 
         FleeHeader()
 
-        HorizontalTrackList(title = "Featured", tracks = featuredTracks)
-        Spacer(modifier = Modifier.padding(10.dp))
-
-        HorizontalTrackList(title = "Popular weekly", tracks = popularTracks)
-        Spacer(modifier = Modifier.padding(10.dp))
-
-        HorizontalTrackList(title = "Acoustic corner", tracks = acousticOnlyTracks)
-        Spacer(modifier = Modifier.padding(10.dp))
+        trackMap.forEach { trackList ->
+            HorizontalTrackList(title = trackList.key, tracks = trackList.value)
+            Spacer(modifier = Modifier.padding(10.dp))
+        }
 
     }
 }
