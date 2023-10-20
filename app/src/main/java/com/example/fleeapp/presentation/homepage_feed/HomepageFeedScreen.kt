@@ -24,7 +24,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.fleeapp.domain.model.tracks.Track
 import com.example.fleeapp.presentation.base_ui.FleeHeader
+import com.example.fleeapp.presentation.base_ui.ListDisplayState
 import com.example.fleeapp.presentation.homepage_feed.components.HorizontalTrackList
 import com.example.fleeapp.presentation.homepage_feed.components.RowTrackItem
 
@@ -40,18 +42,22 @@ fun HomepageFeedScreen(
         "Acoustic corner" to viewModel.acousticOnlyTracks.value
     )
 
+    HomepageFeedBody(trackMap = trackMap)
+}
+
+@Composable
+fun HomepageFeedBody(
+    trackMap: Map<String, ListDisplayState<Track>>
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
 
-        FleeHeader()
-
         trackMap.forEach { trackList ->
             HorizontalTrackList(title = trackList.key, tracks = trackList.value)
             Spacer(modifier = Modifier.padding(10.dp))
         }
-
     }
 }
