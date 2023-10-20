@@ -1,8 +1,8 @@
 package com.example.fleeapp.presentation.homepage_feed.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -10,18 +10,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
 import com.example.fleeapp.domain.model.tracks.Track
+import com.example.fleeapp.presentation.base_ui.AsyncAdjustableImageItem
 
-class ComponentWidth() {
+
+// TODO rework?
+class ComponentSizes() {
     companion object {
         val columnWidth = 150.dp
-        val imageWidth = 180.dp
+        val imageSize = 600
     }
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun RowTrackItem(
     track: Track,
@@ -35,13 +35,12 @@ fun RowTrackItem(
                 end = 15.dp,
                 bottom = 10.dp
             )
-            .width(ComponentWidth.columnWidth)
+            .width(ComponentSizes.columnWidth)
     ) {
-
-        GlideImage(
-            model = track.image,
+        AsyncAdjustableImageItem(
+            imageUrl = track.image,
             contentDescription = track.name,
-            modifier = Modifier.size(ComponentWidth.imageWidth)
+            modifier = Modifier.height(ComponentSizes.columnWidth)
         )
 
         Text(
