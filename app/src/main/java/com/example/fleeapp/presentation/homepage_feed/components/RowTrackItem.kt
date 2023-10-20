@@ -10,9 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
 import com.example.fleeapp.domain.model.tracks.Track
+import com.example.fleeapp.presentation.base_ui.AsyncImageSimpleItem
 
 class ComponentWidth() {
     companion object {
@@ -21,7 +20,6 @@ class ComponentWidth() {
     }
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun RowTrackItem(
     track: Track,
@@ -38,8 +36,8 @@ fun RowTrackItem(
             .width(ComponentWidth.columnWidth)
     ) {
 
-        GlideImage(
-            model = track.image,
+        AsyncImageSimpleItem(
+            imageUrl = track.image,
             contentDescription = track.name,
             modifier = Modifier.size(ComponentWidth.imageWidth)
         )
