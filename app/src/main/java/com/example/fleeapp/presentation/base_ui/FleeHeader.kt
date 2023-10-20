@@ -17,7 +17,6 @@ fun FleeHeader() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.DarkGray)
             .padding(15.dp)
     ) {
         Text(
