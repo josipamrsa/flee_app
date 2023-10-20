@@ -8,8 +8,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFrom
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,7 +24,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.fleeapp.presentation.homepage_feed.components.PopularTrackItem
+import com.example.fleeapp.domain.model.tracks.Track
+import com.example.fleeapp.presentation.base_ui.FleeHeader
+import com.example.fleeapp.presentation.base_ui.ListDisplayState
+import com.example.fleeapp.presentation.homepage_feed.components.HorizontalTrackList
+import com.example.fleeapp.presentation.homepage_feed.components.RowTrackItem
 
 
 @Composable
@@ -29,56 +36,28 @@ fun HomepageFeedScreen(
     navController: NavController,
     viewModel: HomepageFeedViewModel = hiltViewModel()
 ) {
-    val popularTracks = viewModel.popularTracks.value
+    val trackMap = mapOf(
+        "Featured" to viewModel.featuredTracks.value,
+        "Popular weekly" to viewModel.popularTracks.value,
+        "Acoustic corner" to viewModel.acousticOnlyTracks.value
+    )
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.DarkGray)
-                .padding(15.dp)
-        ) {
-            Text(
-                text = "Flee",
-                modifier = Modifier.fillMaxWidth(),
-                style = MaterialTheme.typography.headlineSmall,
-                textAlign = TextAlign.Start
-            )
-        }
+    HomepageFeedBody(trackMap = trackMap)
+}
 
-        Text(
-            text = "Popular weekly",
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(
-                top = 30.dp,
-                start = 20.dp
-            )
-        )
+@Composable
+fun HomepageFeedBody(
+    trackMap: Map<String, ListDisplayState<Track>>
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ) {
 
-        LazyRow(modifier = Modifier.fillMaxSize()) {
-            items(popularTracks.data) { track ->
-                PopularTrackItem(track = track)
-            }
-        }
-
-        if (popularTracks.error.isNotBlank()) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                Text(
-                    text = popularTracks.error,
-                    color = MaterialTheme.colorScheme.error,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
-                        .align(Alignment.Center)
-                )
-            }
-        }
-
-        if (popularTracks.isLoading) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
+        trackMap.forEach { trackList ->
+            HorizontalTrackList(title = trackList.key, tracks = trackList.value)
+            Spacer(modifier = Modifier.padding(10.dp))
         }
     }
 }

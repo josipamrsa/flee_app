@@ -11,7 +11,14 @@ class TrackRepositoryImpl @Inject constructor(
     private val api: JamendoApi
 ) : TrackRepository {
     override suspend fun getPopularTracks(popularityRating: PopularityRating): List<TrackDto> {
-        val tracks = api.getPopularTracks(popularityRating.frequency)
-        return tracks.tracks
+        return api.getPopularTracks(popularityRating.frequency).tracks
+    }
+
+    override suspend fun getFeaturedTracks(): List<TrackDto> {
+        return api.getFeaturedTracks().tracks
+    }
+
+    override suspend fun getAcousticOnlyTracks(): List<TrackDto> {
+        return api.getAcousticOnlyTracks().tracks
     }
 }

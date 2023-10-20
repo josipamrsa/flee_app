@@ -8,6 +8,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.example.fleeapp.presentation.base_ui.FleeHeader
 import com.example.fleeapp.presentation.navigation.bottom_navigation.BottomNavigationBar
 import com.example.fleeapp.presentation.navigation.components.NavigationGraph
 
@@ -17,6 +18,7 @@ fun AppNavigation() {
     val navController = rememberNavController()
 
     Scaffold(
+        topBar = { FleeHeader() },
         bottomBar = { BottomNavigationBar(navController) }
     ) { paddingValues ->
         Column(

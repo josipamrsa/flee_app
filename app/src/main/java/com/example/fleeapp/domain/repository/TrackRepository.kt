@@ -6,5 +6,7 @@ import com.example.fleeapp.domain.model.tracks.PopularityRating
 
 interface TrackRepository {
     suspend fun getPopularTracks(frequency: PopularityRating): List<TrackDto>
+    suspend fun getFeaturedTracks() : List<TrackDto>
+    suspend fun getAcousticOnlyTracks() : List<TrackDto>
 
 }
