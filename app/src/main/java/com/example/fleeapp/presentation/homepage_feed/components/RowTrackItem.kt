@@ -1,8 +1,8 @@
 package com.example.fleeapp.presentation.homepage_feed.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -11,12 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.fleeapp.domain.model.tracks.Track
-import com.example.fleeapp.presentation.base_ui.AsyncImageSimpleItem
+import com.example.fleeapp.presentation.base_ui.AsyncAdjustableImageItem
 
-class ComponentWidth() {
+
+// TODO rework?
+class ComponentSizes() {
     companion object {
         val columnWidth = 150.dp
-        val imageWidth = 180.dp
+        val imageSize = 600
     }
 }
 
@@ -33,13 +35,12 @@ fun RowTrackItem(
                 end = 15.dp,
                 bottom = 10.dp
             )
-            .width(ComponentWidth.columnWidth)
+            .width(ComponentSizes.columnWidth)
     ) {
-
-        AsyncImageSimpleItem(
+        AsyncAdjustableImageItem(
             imageUrl = track.image,
             contentDescription = track.name,
-            modifier = Modifier.size(ComponentWidth.imageWidth)
+            modifier = Modifier.height(ComponentSizes.columnWidth)
         )
 
         Text(
