@@ -1,5 +1,6 @@
 package com.example.fleeapp.presentation.navigation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -43,6 +44,7 @@ fun AppNavigation() {
             modifier = Modifier
                 .padding(paddingValues = paddingValues)
                 .fillMaxSize()
+                .background(FleeMainTheme.colors.backgroundPrimary)
         ) {
             NavigationGraph(navController = navController)
         }
