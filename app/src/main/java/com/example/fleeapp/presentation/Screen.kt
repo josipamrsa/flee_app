@@ -9,10 +9,7 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material.icons.outlined.Star
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
-
 
 data class BottomNavigationItem(
     val title: String,

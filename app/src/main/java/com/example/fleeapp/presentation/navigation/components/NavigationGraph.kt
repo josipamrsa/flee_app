@@ -6,6 +6,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.fleeapp.presentation.Screen
 import com.example.fleeapp.presentation.homepage_feed.HomepageFeedScreen
+import com.example.fleeapp.presentation.music_player.MusicPlayerScreen
+import com.example.fleeapp.presentation.playlist_manager.PlaylistManagerScreen
+import com.example.fleeapp.presentation.track_discovery.TrackDiscoveryScreen
 
 @Composable
 fun NavigationGraph(navController: NavHostController) {
@@ -18,15 +21,15 @@ fun NavigationGraph(navController: NavHostController) {
         }
 
         composable(route = Screen.ListenMusicScreen.route) {
-            HomepageFeedScreen(navController = navController)
+            TrackDiscoveryScreen(navController = navController)
         }
 
         composable(route = Screen.MusicPlayerScreen.route) {
-            HomepageFeedScreen(navController = navController)
+            MusicPlayerScreen(navController = navController)
         }
 
         composable(route = Screen.ManagePlaylistsScreen.route) {
-            HomepageFeedScreen(navController = navController)
+            PlaylistManagerScreen(navController = navController)
         }
     }
 
