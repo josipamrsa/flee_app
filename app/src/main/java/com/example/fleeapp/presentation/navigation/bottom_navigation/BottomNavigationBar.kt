@@ -1,6 +1,5 @@
 package com.example.fleeapp.presentation.navigation.bottom_navigation
 
-import androidx.compose.foundation.background
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -11,10 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.fleeapp.presentation.Screen
 import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
 
