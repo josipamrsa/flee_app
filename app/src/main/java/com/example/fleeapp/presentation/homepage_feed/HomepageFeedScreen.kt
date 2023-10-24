@@ -27,6 +27,7 @@ import androidx.navigation.NavController
 import com.example.fleeapp.domain.model.tracks.Track
 import com.example.fleeapp.presentation.base_ui.FleeHeader
 import com.example.fleeapp.presentation.base_ui.ListDisplayState
+import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
 import com.example.fleeapp.presentation.homepage_feed.components.HorizontalTrackList
 import com.example.fleeapp.presentation.homepage_feed.components.RowTrackItem
 
@@ -34,7 +35,7 @@ import com.example.fleeapp.presentation.homepage_feed.components.RowTrackItem
 @Composable
 fun HomepageFeedScreen(
     navController: NavController,
-    viewModel: HomepageFeedViewModel = hiltViewModel()
+    viewModel: HomepageFeedViewModel = hiltViewModel(),
 ) {
     val trackMap = mapOf(
         "Featured" to viewModel.featuredTracks.value,
@@ -42,17 +43,21 @@ fun HomepageFeedScreen(
         "Acoustic corner" to viewModel.acousticOnlyTracks.value
     )
 
-    HomepageFeedBody(trackMap = trackMap)
+    HomepageFeedBody(
+        trackMap = trackMap,
+    )
 }
 
 @Composable
 fun HomepageFeedBody(
-    trackMap: Map<String, ListDisplayState<Track>>
+    trackMap: Map<String, ListDisplayState<Track>>,
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
+            .background(FleeMainTheme.colors.backgroundPrimary)
+
     ) {
 
         trackMap.forEach { trackList ->

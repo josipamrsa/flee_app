@@ -1,4 +1,15 @@
 package com.example.fleeapp.presentation.base_ui.theme.flee_main
 
-class FleeMainDimensions {
-}
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+
+data class FleeMainDimensions(
+    // COLUMNS AND ROWS //
+    val columnWidth: Dp = 150.dp,
+
+    // IMAGE SIZES //
+    val imageSize: Int = 600
+)
+
+internal val LocalDimensions = staticCompositionLocalOf { FleeMainDimensions() }

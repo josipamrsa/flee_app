@@ -12,6 +12,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.fleeapp.domain.model.tracks.Track
 import com.example.fleeapp.presentation.base_ui.AsyncAdjustableImageItem
+import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
 
 
 // TODO rework?
@@ -45,14 +46,16 @@ fun RowTrackItem(
 
         Text(
             text = track.name,
-            style = MaterialTheme.typography.bodyLarge,
+            color = FleeMainTheme.colors.textPrimary,
+            style = FleeMainTheme.typography.p,
             overflow = TextOverflow.Ellipsis,
             maxLines = 2
         )
 
         Text(
             text = track.artistName,
-            style = MaterialTheme.typography.bodySmall,
+            color = FleeMainTheme.colors.textSecondary,
+            style = FleeMainTheme.typography.small,
             overflow = TextOverflow.Ellipsis,
             maxLines = 1
         )

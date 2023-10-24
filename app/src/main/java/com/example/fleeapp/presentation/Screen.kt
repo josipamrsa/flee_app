@@ -9,7 +9,9 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material.icons.outlined.Star
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
 
 
 data class BottomNavigationItem(
@@ -22,10 +24,30 @@ sealed class Screen(
     val route: String,
     val title: String,
     val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector
+    val unselectedIcon: ImageVector,
 ) {
-    object HomepageFeedScreen : Screen("homepage_feed_screen", "Home", Icons.Filled.Home, Icons.Outlined.Home)
-    object ListenMusicScreen : Screen("listen_music_screen", "Listen", Icons.Filled.Star, Icons.Outlined.Star)
-    object MusicPlayerScreen : Screen("music_player_screen", "Play", Icons.Filled.PlayArrow, Icons.Outlined.PlayArrow)
-    object ManagePlaylistsScreen : Screen("manage_playlists_screen", "Manage", Icons.Filled.List, Icons.Outlined.List)
+    object HomepageFeedScreen : Screen(
+        route = "homepage_feed_screen",
+        title = "Home",
+        selectedIcon = Icons.Filled.Home,
+        unselectedIcon = Icons.Outlined.Home,
+    )
+    object ListenMusicScreen : Screen(
+        route = "listen_music_screen",
+        title = "Listen",
+        selectedIcon = Icons.Filled.Star,
+        unselectedIcon = Icons.Outlined.Star
+    )
+    object MusicPlayerScreen : Screen(
+        route = "music_player_screen",
+        title = "Play",
+        selectedIcon = Icons.Filled.PlayArrow,
+        unselectedIcon = Icons.Outlined.PlayArrow
+    )
+    object ManagePlaylistsScreen : Screen(
+        route = "manage_playlists_screen",
+        title = "Manage",
+        selectedIcon = Icons.Filled.List,
+        unselectedIcon = Icons.Outlined.List
+    )
 }
