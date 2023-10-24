@@ -1,17 +1,22 @@
 package com.example.fleeapp.presentation.navigation.bottom_navigation
 
+import androidx.compose.foundation.background
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.fleeapp.presentation.Screen
+import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
 
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
@@ -31,7 +36,9 @@ fun BottomNavigationBar(navController: NavHostController) {
         navController.navigate(screen.route)
     }
 
-    NavigationBar() {
+    NavigationBar(
+        containerColor = FleeMainTheme.colors.backgroundSecondary,
+    ) {
         items.forEachIndexed { index, screen ->
             NavigationBarItem(
                 selected = selectedItemIndex == index,
@@ -39,10 +46,21 @@ fun BottomNavigationBar(navController: NavHostController) {
                 icon = {
                     Icon(
                         imageVector = if (index == selectedItemIndex) screen.selectedIcon else screen.unselectedIcon,
-                        contentDescription = screen.title
+                        contentDescription = screen.title,
                     )
                 },
-                label = { Text(text = screen.title) }
+                label = {
+                    Text(
+                        text = screen.title,
+                        color = FleeMainTheme.colors.textSecondary
+                    )
+                },
+
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = FleeMainTheme.colors.navItemSelectedIcon,
+                    unselectedIconColor = FleeMainTheme.colors.navItemUnselectedIcon,
+                    indicatorColor = FleeMainTheme.colors.navItemSelectedBackground
+                )
             )
         }
     }

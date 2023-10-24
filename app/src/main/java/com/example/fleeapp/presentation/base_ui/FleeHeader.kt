@@ -11,20 +11,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
 
 @Composable
 fun FleeHeader() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.DarkGray)
             .padding(15.dp)
     ) {
         Text(
             text = "Flee",
             modifier = Modifier.fillMaxWidth(),
-            style = MaterialTheme.typography.headlineSmall,
-            textAlign = TextAlign.Start
+            style = FleeMainTheme.typography.header,
+            textAlign = TextAlign.Start,
+            color = FleeMainTheme.colors.textPrimary
         )
     }
 }

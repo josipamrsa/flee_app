@@ -14,6 +14,7 @@ import com.example.fleeapp.presentation.base_ui.DataErrorHandler
 import com.example.fleeapp.presentation.base_ui.DataLoaderDisplay
 import com.example.fleeapp.presentation.base_ui.ListDisplayState
 import androidx.compose.ui.text.font.FontStyle
+import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
 
 @Composable
 fun HorizontalTrackList(
@@ -22,8 +23,8 @@ fun HorizontalTrackList(
 ) {
     Text(
         text = title,
-        style = MaterialTheme.typography.bodyMedium,
-        fontStyle = FontStyle.Italic,
+        style = FleeMainTheme.typography.h6,
+        color = FleeMainTheme.colors.textAccentPrimary,
         modifier = Modifier.padding(
             top = 30.dp,
             start = 20.dp
