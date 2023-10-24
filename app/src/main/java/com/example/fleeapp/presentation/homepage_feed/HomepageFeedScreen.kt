@@ -30,18 +30,23 @@ fun HomepageFeedScreen(
         "Acoustic corner" to viewModel.acousticOnlyTracks.value
     )
 
+    var isToStop: Boolean = false
+
     HomepageFeedBody(
         trackMap = trackMap,
-        onTrackClick = { viewModel.playAudio(it.audio) },
-        onTrackDoubleClick = { viewModel.stopAudio() }
+        onTrackClick = { },
+        onTrackDoubleClick = {
+            viewModel.playOrStopAudio(it.audio, isToStop)
+            isToStop = !isToStop
+        }
     )
 }
 
 @Composable
 fun HomepageFeedBody(
     trackMap: Map<String, ListDisplayState<Track>>,
-    onTrackClick: (Track) -> Unit,
-    onTrackDoubleClick: () -> Unit,
+    onTrackClick: () -> Unit,
+    onTrackDoubleClick: (Track) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -55,8 +60,8 @@ fun HomepageFeedBody(
             HorizontalTrackList(
                 title = trackList.key,
                 tracks = trackList.value,
-                onTrackClick = { onTrackClick(it) },
-                onTrackDoubleClick = onTrackDoubleClick
+                onTrackClick = onTrackClick,
+                onTrackDoubleClick = { onTrackDoubleClick(it) }
             )
             Spacer(modifier = Modifier.padding(10.dp))
         }

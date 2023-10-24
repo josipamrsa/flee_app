@@ -1,11 +1,13 @@
 package com.example.fleeapp.common.media_player
 
 interface AudioPlayer {
-    fun playAudio(
+    /*fun playAudio(
         url: String
     )
 
-    fun stopAudio()
+    fun stopAudio()*/
+
+    fun playOrStopAudio(url: String, isToStop: Boolean)
 
     fun playTenSecondPreview(
         url: String,

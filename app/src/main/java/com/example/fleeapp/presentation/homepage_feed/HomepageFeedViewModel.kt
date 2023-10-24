@@ -85,11 +85,7 @@ class HomepageFeedViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun playAudio(url: String) {
-        player.playAudio(url)
-    }
-
-    fun stopAudio() {
-        player.stopAudio()
+    fun playOrStopAudio(url: String, isToStop: Boolean) {
+        player.playOrStopAudio(url, isToStop)
     }
 }

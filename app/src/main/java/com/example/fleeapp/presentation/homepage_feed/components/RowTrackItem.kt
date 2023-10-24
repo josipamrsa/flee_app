@@ -29,9 +29,10 @@ class ComponentSizes() {
 @Composable
 fun RowTrackItem(
     track: Track,
-    onTrackClick: (Track) -> Unit,
-    onTrackDoubleClick: () -> Unit,
+    onTrackClick: () -> Unit,
+    onTrackDoubleClick: (Track) -> Unit,
 ) {
+
     Column(
         modifier = Modifier
             .padding(
@@ -49,8 +50,8 @@ fun RowTrackItem(
             modifier = Modifier
                 .height(ComponentSizes.columnWidth)
                 .combinedClickable(
-                    onClick = { onTrackClick(track) },
-                    onDoubleClick = onTrackDoubleClick
+                    onClick = { /**/ },
+                    onDoubleClick = { onTrackDoubleClick(track) }
                 )
         )
 

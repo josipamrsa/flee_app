@@ -18,8 +18,8 @@ import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
 fun HorizontalTrackList(
     title: String,
     tracks: ListDisplayState<Track>,
-    onTrackClick: (Track) -> Unit,
-    onTrackDoubleClick: () -> Unit,
+    onTrackClick: () -> Unit,
+    onTrackDoubleClick: (Track) -> Unit,
 ) {
     Text(
         text = title,
@@ -35,10 +35,10 @@ fun HorizontalTrackList(
         items(tracks.data) { track ->
             RowTrackItem(
                 track = track,
-                onTrackClick = {
-                    onTrackClick(it)
-                },
-                onTrackDoubleClick = onTrackDoubleClick
+                onTrackClick = onTrackClick,
+                onTrackDoubleClick = {
+                    onTrackDoubleClick(it)
+                }
             )
         }
     }
