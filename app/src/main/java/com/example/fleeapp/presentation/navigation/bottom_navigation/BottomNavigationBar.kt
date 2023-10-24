@@ -52,14 +52,16 @@ fun BottomNavigationBar(navController: NavHostController) {
                 label = {
                     Text(
                         text = screen.title,
-                        color = FleeMainTheme.colors.textSecondary
                     )
                 },
 
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = FleeMainTheme.colors.navItemSelectedIcon,
+                    selectedTextColor = FleeMainTheme.colors.navItemSelectedBackground,
                     unselectedIconColor = FleeMainTheme.colors.navItemUnselectedIcon,
-                    indicatorColor = FleeMainTheme.colors.navItemSelectedBackground
+                    unselectedTextColor = FleeMainTheme.colors.textSecondary,
+                    indicatorColor = FleeMainTheme.colors.navItemSelectedBackground,
+
                 )
             )
         }
