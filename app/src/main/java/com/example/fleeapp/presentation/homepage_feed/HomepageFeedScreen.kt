@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.fleeapp.domain.model.tracks.Track
 import com.example.fleeapp.presentation.base_ui.ListDisplayState
@@ -31,12 +32,16 @@ fun HomepageFeedScreen(
 
     HomepageFeedBody(
         trackMap = trackMap,
+        onTrackClick = { viewModel.playAudio(it.audio) },
+        onTrackDoubleClick = { viewModel.stopAudio() }
     )
 }
 
 @Composable
 fun HomepageFeedBody(
     trackMap: Map<String, ListDisplayState<Track>>,
+    onTrackClick: (Track) -> Unit,
+    onTrackDoubleClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -47,7 +52,12 @@ fun HomepageFeedBody(
     ) {
 
         trackMap.forEach { trackList ->
-            HorizontalTrackList(title = trackList.key, tracks = trackList.value)
+            HorizontalTrackList(
+                title = trackList.key,
+                tracks = trackList.value,
+                onTrackClick = { onTrackClick(it) },
+                onTrackDoubleClick = onTrackDoubleClick
+            )
             Spacer(modifier = Modifier.padding(10.dp))
         }
     }

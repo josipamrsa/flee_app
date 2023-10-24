@@ -17,7 +17,9 @@ import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
 @Composable
 fun HorizontalTrackList(
     title: String,
-    tracks: ListDisplayState<Track>
+    tracks: ListDisplayState<Track>,
+    onTrackClick: (Track) -> Unit,
+    onTrackDoubleClick: () -> Unit,
 ) {
     Text(
         text = title,
@@ -31,7 +33,13 @@ fun HorizontalTrackList(
 
     LazyRow(modifier = Modifier.fillMaxWidth()) {
         items(tracks.data) { track ->
-            RowTrackItem(track = track)
+            RowTrackItem(
+                track = track,
+                onTrackClick = {
+                    onTrackClick(it)
+                },
+                onTrackDoubleClick = onTrackDoubleClick
+            )
         }
     }
 

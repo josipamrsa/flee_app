@@ -1,5 +1,9 @@
 package com.example.fleeapp.presentation.homepage_feed.components
 
+import android.util.Log
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,10 +25,12 @@ class ComponentSizes() {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RowTrackItem(
     track: Track,
-    /*onItemClick: (Track) -> Unit*/
+    onTrackClick: (Track) -> Unit,
+    onTrackDoubleClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -35,11 +41,17 @@ fun RowTrackItem(
                 bottom = 10.dp
             )
             .width(ComponentSizes.columnWidth)
+
     ) {
         AsyncAdjustableImageItem(
             imageUrl = track.image,
             contentDescription = track.name,
-            modifier = Modifier.height(ComponentSizes.columnWidth)
+            modifier = Modifier
+                .height(ComponentSizes.columnWidth)
+                .combinedClickable(
+                    onClick = { onTrackClick(track) },
+                    onDoubleClick = onTrackDoubleClick
+                )
         )
 
         Text(

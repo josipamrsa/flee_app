@@ -1,11 +1,14 @@
 package com.example.fleeapp.presentation.homepage_feed
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.fleeapp.FleeApplication
 import com.example.fleeapp.common.Resource
+import com.example.fleeapp.common.media_player.AudioPlayerImpl
 import com.example.fleeapp.domain.model.tracks.Track
 import com.example.fleeapp.domain.use_case.get_acoustic_only_tracks.GetAcousticOnlyTracksUseCase
 import com.example.fleeapp.domain.use_case.get_featured_tracks.GetFeaturedTracksUseCase
@@ -32,6 +35,10 @@ class HomepageFeedViewModel @Inject constructor(
 
     private val _acousticOnlyTracks = mutableStateOf<ListDisplayState<Track>>(ListDisplayState())
     val acousticOnlyTracks: State<ListDisplayState<Track>> = _acousticOnlyTracks
+
+    private val player by lazy {
+        AudioPlayerImpl(FleeApplication.appContext)
+    }
 
     init {
         getFeaturedTracks()
@@ -76,5 +83,13 @@ class HomepageFeedViewModel @Inject constructor(
         getAcousticOnlyTracksUseCase().onEach { result ->
             handleResult(_acousticOnlyTracks, result)
         }.launchIn(viewModelScope)
+    }
+
+    fun playAudio(url: String) {
+        player.playAudio(url)
+    }
+
+    fun stopAudio() {
+        player.stopAudio()
     }
 }
