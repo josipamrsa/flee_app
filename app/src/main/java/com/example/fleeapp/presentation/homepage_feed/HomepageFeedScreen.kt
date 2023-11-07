@@ -30,14 +30,11 @@ fun HomepageFeedScreen(
         "Acoustic corner" to viewModel.acousticOnlyTracks.value
     )
 
-    var isToStop: Boolean = false
-
     HomepageFeedBody(
         trackMap = trackMap,
         onTrackClick = { },
         onTrackDoubleClick = {
-            viewModel.playOrStopAudio(it.audio, isToStop)
-            isToStop = !isToStop
+            viewModel.playOrStopAudio(it.audio)
         }
     )
 }

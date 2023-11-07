@@ -1,5 +1,8 @@
 package com.example.fleeapp.di
 
+import android.content.Context
+import android.media.AudioAttributes
+import androidx.media3.exoplayer.ExoPlayer
 import com.example.fleeapp.BuildConfig
 import com.example.fleeapp.data.remote.JamendoApi
 import com.example.fleeapp.data.repository.TrackRepositoryImpl
@@ -7,6 +10,8 @@ import com.example.fleeapp.domain.repository.TrackRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ServiceScoped
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -53,4 +58,5 @@ object AppModule {
     fun provideTrackRepository(api: JamendoApi): TrackRepository {
         return TrackRepositoryImpl(api)
     }
+
 }

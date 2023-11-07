@@ -1,46 +1,53 @@
 package com.example.fleeapp.common.media_player
 
 import android.content.Context
-import android.media.AudioAttributes
-import android.media.MediaPlayer
-import android.net.Uri
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
+import kotlinx.coroutines.flow.MutableStateFlow
 
 
 class AudioPlayerImpl(
     private val context: Context
 ) : AudioPlayer {
 
-    private var player: MediaPlayer? = null
+    private val player = ExoPlayer.Builder(context).build()
+    private val currentTrack = MutableStateFlow<String?>(null)
 
-    private fun playAudio(url: String) {
-        player = MediaPlayer().apply {
-            setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .build()
-            )
+    private fun playTrack(url: String) {
+        currentTrack.value = url
 
-            setDataSource(context, Uri.parse(url))
+        player.apply {
+            setMediaItem(MediaItem.fromUri(url))
             prepare()
-            start()
+            playWhenReady = true
         }
     }
 
-    private fun stopAudio() {
-        player?.apply {
+    private fun stopTrack(url: String) {
+        player.apply {
             stop()
-            reset()
-            release()
+            playWhenReady = false
+
+            if (currentTrack.value != url) {
+                currentTrack.value = null
+                playTrack(url)
+            } else {
+                currentTrack.value = null
+            }
         }
-
-        player = null
     }
 
-    override fun playOrStopAudio(url: String, isToStop: Boolean) {
-        if (isToStop) stopAudio() else playAudio(url)
+    override fun playOrStopAudio(url: String) {
+        player.apply {
+            if (playWhenReady || contentDuration == currentPosition)
+                stopTrack(url)
+            else playTrack(url)
+        }
     }
 
-    override fun playTenSecondPreview(url: String, start: Int, duration: Int) {
-
+    override fun playTenSecondPreview(url: String, start: Long, duration: Long) {
+        player.apply {
+            seekTo(start).also { if (currentPosition == ) }
+        }
     }
 }
