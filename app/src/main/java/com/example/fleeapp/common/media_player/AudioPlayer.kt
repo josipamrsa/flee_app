@@ -6,7 +6,6 @@ interface AudioPlayer {
 
     fun playTenSecondPreview(
         url: String,
-        start: Int,
-        duration: Int
+        duration: Long
     )
 }

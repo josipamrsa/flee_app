@@ -17,6 +17,7 @@ import com.example.fleeapp.presentation.base_ui.ListDisplayState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.time.Duration
 import javax.inject.Inject
 
 @HiltViewModel
@@ -85,7 +86,9 @@ class HomepageFeedViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun playOrStopAudio(url: String) {
-        player.playOrStopAudio(url)
+    fun playTenSecondPreview(url: String, duration: Int) {
+        // Hacky, but will play the last 20 seconds of a song because
+        // current ExoPlayer functionalities do not fully support song clips :/
+        player.playTenSecondPreview(url, (duration * 1000 - 20000).toLong())
     }
 }

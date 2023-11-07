@@ -34,7 +34,7 @@ fun HomepageFeedScreen(
         trackMap = trackMap,
         onTrackClick = { },
         onTrackDoubleClick = {
-            viewModel.playOrStopAudio(it.audio)
+            viewModel.playTenSecondPreview(it.audio, it.duration)
         }
     )
 }

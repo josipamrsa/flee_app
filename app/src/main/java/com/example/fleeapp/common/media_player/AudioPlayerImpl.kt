@@ -3,6 +3,7 @@ package com.example.fleeapp.common.media_player
 import android.content.Context
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.ClippingMediaSource
 import kotlinx.coroutines.flow.MutableStateFlow
 
 
@@ -13,24 +14,49 @@ class AudioPlayerImpl(
     private val player = ExoPlayer.Builder(context).build()
     private val currentTrack = MutableStateFlow<String?>(null)
 
-    private fun playTrack(url: String) {
+    private fun playTrack(
+        url: String,
+        isPreview: Boolean = false,
+        position: Long = 0
+    ) {
         currentTrack.value = url
 
+        /*
+            TODO revisit this in the future
+            mediaItem.clippingConfiguration
+                .buildUpon()
+                .setStartPositionMs(1000)
+                .setEndPositionMs(19000)
+            */
+
         player.apply {
-            setMediaItem(MediaItem.fromUri(url))
+            val mediaItem = MediaItem.fromUri(url)
+            setMediaItem(mediaItem)
+
+            if (isPreview)
+                seekTo(position)
+
             prepare()
             playWhenReady = true
         }
     }
 
-    private fun stopTrack(url: String) {
+    private fun stopTrack(
+        url: String,
+        isPreview: Boolean = false,
+        position: Long = 0
+    ) {
         player.apply {
             stop()
             playWhenReady = false
 
             if (currentTrack.value != url) {
                 currentTrack.value = null
-                playTrack(url)
+                playTrack(
+                    url,
+                    isPreview = isPreview,
+                    position = position
+                )
             } else {
                 currentTrack.value = null
             }
@@ -45,9 +71,19 @@ class AudioPlayerImpl(
         }
     }
 
-    override fun playTenSecondPreview(url: String, start: Long, duration: Long) {
+    override fun playTenSecondPreview(url: String, position: Long) {
         player.apply {
-            seekTo(start).also { if (currentPosition == ) }
+            if (playWhenReady || contentDuration == currentPosition)
+                stopTrack(
+                    url,
+                    isPreview = true,
+                    position = position
+                )
+            else playTrack(
+                url,
+                isPreview = true,
+                position = position
+            )
         }
     }
 }
