@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.ClippingMediaSource
+import com.example.fleeapp.domain.model.tracks.Track
 import kotlinx.coroutines.flow.MutableStateFlow
 
 
@@ -12,14 +13,14 @@ class AudioPlayerImpl(
 ) : AudioPlayer {
 
     private val player = ExoPlayer.Builder(context).build()
-    private val currentTrack = MutableStateFlow<String?>(null)
+    private val currentTrack = MutableStateFlow<Track?>(null)
 
     private fun playTrack(
-        url: String,
+        track: Track,
         isPreview: Boolean = false,
         position: Long = 0
     ) {
-        currentTrack.value = url
+        currentTrack.value = track
 
         /*
             TODO revisit this in the future
@@ -30,7 +31,7 @@ class AudioPlayerImpl(
             */
 
         player.apply {
-            val mediaItem = MediaItem.fromUri(url)
+            val mediaItem = MediaItem.fromUri(track.audio)
             setMediaItem(mediaItem)
 
             if (isPreview)
@@ -42,7 +43,7 @@ class AudioPlayerImpl(
     }
 
     private fun stopTrack(
-        url: String,
+        track: Track,
         isPreview: Boolean = false,
         position: Long = 0
     ) {
@@ -50,10 +51,10 @@ class AudioPlayerImpl(
             stop()
             playWhenReady = false
 
-            if (currentTrack.value != url) {
+            if (currentTrack.value?.id != track.id) {
                 currentTrack.value = null
                 playTrack(
-                    url,
+                    track,
                     isPreview = isPreview,
                     position = position
                 )
@@ -63,24 +64,24 @@ class AudioPlayerImpl(
         }
     }
 
-    override fun playOrStopAudio(url: String) {
+    override fun playOrStopAudio(track: Track) {
         player.apply {
             if (playWhenReady || contentDuration == currentPosition)
-                stopTrack(url)
-            else playTrack(url)
+                stopTrack(track)
+            else playTrack(track)
         }
     }
 
-    override fun playTenSecondPreview(url: String, position: Long) {
+    override fun playTenSecondPreview(track: Track, position: Long) {
         player.apply {
             if (playWhenReady || contentDuration == currentPosition)
                 stopTrack(
-                    url,
+                    track,
                     isPreview = true,
                     position = position
                 )
             else playTrack(
-                url,
+                track,
                 isPreview = true,
                 position = position
             )

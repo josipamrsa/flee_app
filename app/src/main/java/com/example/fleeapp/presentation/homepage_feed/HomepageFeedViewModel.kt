@@ -86,9 +86,9 @@ class HomepageFeedViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun playTenSecondPreview(url: String, duration: Int) {
+    fun playTenSecondPreview(track: Track) {
         // Hacky, but will play the last 20 seconds of a song because
         // current ExoPlayer functionalities do not fully support song clips :/
-        player.playTenSecondPreview(url, (duration * 1000 - 20000).toLong())
+        player.playTenSecondPreview(track, (track.duration * 1000 - 20000).toLong())
     }
 }
