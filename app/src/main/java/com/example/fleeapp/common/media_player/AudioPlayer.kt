@@ -5,6 +5,8 @@ import java.text.FieldPosition
 
 
 interface AudioPlayer {
+
+    fun getPlaybackState()
     fun playOrStopAudio(track: Track)
 
     fun playTenSecondPreview(
