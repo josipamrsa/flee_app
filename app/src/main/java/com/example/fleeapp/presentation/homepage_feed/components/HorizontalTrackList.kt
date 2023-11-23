@@ -19,9 +19,9 @@ import com.example.fleeapp.presentation.homepage_feed.states.PreviewTrackState
 fun HorizontalTrackList(
     title: String,
     trackPlaying: PreviewTrackState<Track>,
-    tracks: ListDisplayState<PreviewTrackState<Track>>,
+    tracks: ListDisplayState<Track>,
     onTrackClick: () -> Unit,
-    onTrackDoubleClick: (PreviewTrackState<Track>) -> Unit,
+    onTrackDoubleClick: (Track) -> Unit,
 ) {
     Text(
         text = title,
@@ -37,7 +37,7 @@ fun HorizontalTrackList(
         items(tracks.data) { wrapped ->
             wrapped.let { it ->
                 RowTrackItem(
-                    wrapped = it,
+                    track = it,
                     trackPlaying = trackPlaying,
                     onTrackClick = onTrackClick,
                     onTrackDoubleClick = {

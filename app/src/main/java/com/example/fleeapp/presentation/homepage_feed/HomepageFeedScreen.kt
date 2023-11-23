@@ -13,7 +13,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.fleeapp.domain.model.tracks.Track
 import com.example.fleeapp.presentation.base_ui.ListDisplayState
@@ -28,7 +27,6 @@ fun HomepageFeedScreen(
     viewModel: HomepageFeedViewModel = hiltViewModel(),
 ) {
     val nowPlayingTrack by viewModel.isNowPlayingTrack.collectAsState()
-    nowPlayingTrack
 
     val trackMap = mapOf(
         "Featured" to viewModel.featuredTracks.value,
@@ -36,28 +34,24 @@ fun HomepageFeedScreen(
         "Acoustic corner" to viewModel.acousticOnlyTracks.value
     )
 
-    fun setupPlayingTrack(trackState: PreviewTrackState<Track>) {
-        viewModel.onSetNowPlayingTrack(trackState).also {
-            viewModel.playTenSecondPreview(trackState)
-        }
-    }
-
     HomepageFeedBody(
         trackMap = trackMap,
         trackPlaying = nowPlayingTrack,
         onTrackClick = { },
         onTrackDoubleClick = { trackState ->
-            setupPlayingTrack(trackState)
+            viewModel.onSetNowPlayingTrack(trackState).also {
+                viewModel.playTenSecondPreview(trackState)
+            }
         }
     )
 }
 
 @Composable
 fun HomepageFeedBody(
-    trackMap: Map<String, ListDisplayState<PreviewTrackState<Track>>>,
+    trackMap: Map<String, ListDisplayState<Track>>,
     trackPlaying: PreviewTrackState<Track>,
     onTrackClick: () -> Unit,
-    onTrackDoubleClick: (PreviewTrackState<Track>) -> Unit,
+    onTrackDoubleClick: (Track) -> Unit,
 ) {
     Column(
         modifier = Modifier
