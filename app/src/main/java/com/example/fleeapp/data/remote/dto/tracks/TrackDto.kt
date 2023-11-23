@@ -58,6 +58,7 @@ fun TrackDto.toTrack(): Track {
         image = image,
         musicInfo = musicInfo,
         name = name,
-        shortUrl = shortUrl
+        shortUrl = shortUrl,
+        audio = audio
     )
 }

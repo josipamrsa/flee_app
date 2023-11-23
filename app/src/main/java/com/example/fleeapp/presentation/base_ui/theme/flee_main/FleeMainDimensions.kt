@@ -6,7 +6,7 @@ import androidx.compose.ui.unit.dp
 
 data class FleeMainDimensions(
     // COLUMNS AND ROWS //
-    val columnWidth: Dp = 150.dp,
+    val columnWidth: Dp = 220.dp,
 
     // IMAGE SIZES //
     val imageSize: Int = 600

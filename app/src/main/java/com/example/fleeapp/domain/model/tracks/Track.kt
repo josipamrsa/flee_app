@@ -12,4 +12,5 @@ class Track (
     val musicInfo: MusicInfo?,
     val name: String,
     val shortUrl: String,
+    val audio: String,
 )

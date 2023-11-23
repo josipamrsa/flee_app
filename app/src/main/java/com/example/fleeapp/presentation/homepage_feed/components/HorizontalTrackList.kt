@@ -13,11 +13,15 @@ import com.example.fleeapp.presentation.base_ui.DataErrorHandler
 import com.example.fleeapp.presentation.base_ui.DataLoaderDisplay
 import com.example.fleeapp.presentation.base_ui.ListDisplayState
 import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
+import com.example.fleeapp.presentation.homepage_feed.states.PreviewTrackState
 
 @Composable
 fun HorizontalTrackList(
     title: String,
-    tracks: ListDisplayState<Track>
+    trackPlaying: PreviewTrackState<Track>,
+    tracks: ListDisplayState<Track>,
+    onTrackClick: () -> Unit,
+    onTrackDoubleClick: (Track) -> Unit,
 ) {
     Text(
         text = title,
@@ -30,8 +34,17 @@ fun HorizontalTrackList(
     )
 
     LazyRow(modifier = Modifier.fillMaxWidth()) {
-        items(tracks.data) { track ->
-            RowTrackItem(track = track)
+        items(tracks.data) { wrapped ->
+            wrapped.let { it ->
+                RowTrackItem(
+                    track = it,
+                    trackPlaying = trackPlaying,
+                    onTrackClick = onTrackClick,
+                    onTrackDoubleClick = {
+                        onTrackDoubleClick(it)
+                    }
+                )
+            }
         }
     }
 
