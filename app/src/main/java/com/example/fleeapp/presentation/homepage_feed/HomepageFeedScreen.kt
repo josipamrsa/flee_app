@@ -37,6 +37,9 @@ fun HomepageFeedScreen(
     HomepageFeedBody(
         trackMap = trackMap,
         trackPlaying = nowPlayingTrack,
+        onFilterableClicked = {
+            /* LOOK WHAT YOU MADE ME TODO */
+        },
         onTrackClick = { },
         onTrackDoubleClick = { trackState ->
             viewModel.onSetNowPlayingTrack(trackState).also {
@@ -50,6 +53,7 @@ fun HomepageFeedScreen(
 fun HomepageFeedBody(
     trackMap: Map<String, ListDisplayState<Track>>,
     trackPlaying: PreviewTrackState<Track>,
+    onFilterableClicked: () -> Unit,
     onTrackClick: () -> Unit,
     onTrackDoubleClick: (Track) -> Unit,
 ) {
@@ -66,6 +70,7 @@ fun HomepageFeedBody(
                 title = trackList.key,
                 tracks = trackList.value,
                 trackPlaying = trackPlaying,
+                onFilterableClicked = onFilterableClicked,
                 onTrackClick = onTrackClick,
                 onTrackDoubleClick = { onTrackDoubleClick(it) }
             )

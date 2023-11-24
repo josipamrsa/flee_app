@@ -28,8 +28,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.fleeapp.domain.model.tracks.Track
 import com.example.fleeapp.presentation.base_ui.DataErrorHandler
@@ -41,7 +39,8 @@ import com.example.fleeapp.presentation.homepage_feed.states.PreviewTrackState
 @Composable
 fun Filterable(
     title: String,
-    options: List<String>
+    options: List<String>,
+    onFilterableClicked: () -> Unit
 ) {
     var expanded by remember {
         mutableStateOf(false)
@@ -50,6 +49,13 @@ fun Filterable(
     var filterTitle by remember {
         mutableStateOf(title)
     }
+
+    fun filterData(option: String) {
+        filterTitle = option
+        onFilterableClicked()
+        expanded = false
+    }
+
 
     Column(modifier = Modifier
         .width(FleeMainTheme.dimensions.smallComponentWidth)
@@ -117,10 +123,7 @@ fun Filterable(
                                 style = FleeMainTheme.typography.h6,
                             )
                         },
-                        onClick = {
-                            filterTitle = option
-                            expanded = false
-                        },
+                        onClick = { filterData(option) },
                         colors = MenuDefaults.itemColors(
                             textColor = FleeMainTheme.colors.textAccentSecondary
                         )
@@ -150,20 +153,16 @@ fun HorizontalTrackList(
     title: String,
     trackPlaying: PreviewTrackState<Track>,
     tracks: ListDisplayState<Track>,
+    onFilterableClicked: () -> Unit,
     onTrackClick: () -> Unit,
     onTrackDoubleClick: (Track) -> Unit,
 ) {
 
-    val options = listOf(
-        "Popular weekly",
-        "Popular monthly",
-        "Popular all-time"
-    )
-
     if (tracks.filterable)
         Filterable(
             title = title,
-            options = options
+            options = tracks.filterableOptions,
+            onFilterableClicked = onFilterableClicked
         )
     else NonFilterable(title = title)
 

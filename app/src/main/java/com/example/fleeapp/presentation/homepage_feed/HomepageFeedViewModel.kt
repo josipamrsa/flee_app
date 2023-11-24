@@ -69,6 +69,7 @@ class HomepageFeedViewModel @Inject constructor(
                             true,
                             _isNowPlayingTrack.value.track,
                         )
+
                         Player.STATE_ENDED -> _isNowPlayingTrack.value = PreviewTrackState(
                             false,
                             _isNowPlayingTrack.value.track,
@@ -82,12 +83,17 @@ class HomepageFeedViewModel @Inject constructor(
     private fun handleResult(
         state: MutableState<ListDisplayState<Track>>,
         result: Resource<List<Track>>,
-        filterable: Boolean = false
+        filterable: Boolean = false,
+        filterableOptions: List<String> = emptyList()
     ) {
         when (result) {
             is Resource.Success -> {
                 state.value =
-                    ListDisplayState(data = result.data ?: emptyList(), filterable = filterable)
+                    ListDisplayState(
+                        data = result.data ?: emptyList(),
+                        filterable = filterable,
+                        filterableOptions = filterableOptions
+                    )
             }
 
             is Resource.Error -> {
@@ -109,7 +115,16 @@ class HomepageFeedViewModel @Inject constructor(
 
     private fun getPopularTracks() {
         getPopularTracksUseCase().onEach { result ->
-            handleResult(_popularTracks, result, filterable = true)
+            handleResult(
+                _popularTracks,
+                result,
+                filterable = true,
+                filterableOptions = listOf(
+                    "Popular weekly",
+                    "Popular monthly",
+                    "Popular all-time"
+                )
+            )
         }.launchIn(viewModelScope)
     }
 
