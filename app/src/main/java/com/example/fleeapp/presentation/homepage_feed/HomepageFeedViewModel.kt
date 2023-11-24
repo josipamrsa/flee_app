@@ -81,12 +81,13 @@ class HomepageFeedViewModel @Inject constructor(
 
     private fun handleResult(
         state: MutableState<ListDisplayState<Track>>,
-        result: Resource<List<Track>>
+        result: Resource<List<Track>>,
+        filterable: Boolean = false
     ) {
         when (result) {
             is Resource.Success -> {
                 state.value =
-                    ListDisplayState(data = result.data ?: emptyList())
+                    ListDisplayState(data = result.data ?: emptyList(), filterable = filterable)
             }
 
             is Resource.Error -> {
@@ -108,7 +109,7 @@ class HomepageFeedViewModel @Inject constructor(
 
     private fun getPopularTracks() {
         getPopularTracksUseCase().onEach { result ->
-            handleResult(_popularTracks, result)
+            handleResult(_popularTracks, result, filterable = true)
         }.launchIn(viewModelScope)
     }
 
