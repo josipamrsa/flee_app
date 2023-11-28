@@ -23,14 +23,26 @@ import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
 
 @Composable
 fun RowTrackItemDetails(track: Track) {
-    Column() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(20.dp)
+    ) {
         Text(
-            text = track.artistName,
+            text = track.albumName,
             style = FleeMainTheme.typography.p,
             color = FleeMainTheme.colors.textAccentPrimary,
             textAlign = TextAlign.Center,
             modifier = Modifier
-                .fillMaxSize()
+                .wrapContentSize(Alignment.Center)
+        )
+
+        Text(
+            text = track.albumName,
+            style = FleeMainTheme.typography.p,
+            color = FleeMainTheme.colors.textAccentPrimary,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
                 .wrapContentSize(Alignment.Center)
         )
     }
