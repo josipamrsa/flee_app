@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -30,6 +32,18 @@ fun RowTrackItem(
     var shouldUiChange = trackPlaying.isNowPlaying
             && trackPlaying.track?.id == track.id
 
+    var shouldDetailsShow = remember {
+        mutableStateOf(false)
+    }
+
+
+    if (shouldDetailsShow.value)
+        RowTrackItemDialog(
+            track = track,
+            onDismissRequest = {
+                shouldDetailsShow.value = false
+            }
+        )
 
     Column(
         modifier = Modifier
@@ -55,6 +69,9 @@ fun RowTrackItem(
                     .height(FleeMainTheme.dimensions.columnWidth)
                     .combinedClickable(
                         onClick = { /**/ },
+                        onLongClick = {
+                            shouldDetailsShow.value = true
+                        },
                         onDoubleClick = {
                             onTrackDoubleClick(track)
                         }
