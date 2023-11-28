@@ -9,6 +9,7 @@ import androidx.media3.common.Player
 import com.example.fleeapp.FleeApplication
 import com.example.fleeapp.common.Resource
 import com.example.fleeapp.common.media_player.AudioPlayerImpl
+import com.example.fleeapp.domain.model.tracks.PopularityRating
 import com.example.fleeapp.domain.model.tracks.Track
 import com.example.fleeapp.domain.use_case.get_acoustic_only_tracks.GetAcousticOnlyTracksUseCase
 import com.example.fleeapp.domain.use_case.get_featured_tracks.GetFeaturedTracksUseCase
@@ -45,6 +46,9 @@ class HomepageFeedViewModel @Inject constructor(
     private val _isNowPlayingTrack = MutableStateFlow(PreviewTrackState<Track>())
     val isNowPlayingTrack: StateFlow<PreviewTrackState<Track>> = _isNowPlayingTrack
 
+    private val _filterableTitle = MutableStateFlow(String())
+    val filterableTitle: StateFlow<String> = _filterableTitle
+
 
     private val player by lazy {
         AudioPlayerImpl(FleeApplication.appContext)
@@ -58,7 +62,7 @@ class HomepageFeedViewModel @Inject constructor(
         getPlaybackInformation()
     }
 
-    fun getPlaybackInformation() {
+    private fun getPlaybackInformation() {
         player.getPlayerInstance().addListener(
             object : Player.Listener {
                 override fun onPlaybackStateChanged(playbackState: Int) {
@@ -69,6 +73,7 @@ class HomepageFeedViewModel @Inject constructor(
                             true,
                             _isNowPlayingTrack.value.track,
                         )
+
                         Player.STATE_ENDED -> _isNowPlayingTrack.value = PreviewTrackState(
                             false,
                             _isNowPlayingTrack.value.track,
@@ -81,12 +86,18 @@ class HomepageFeedViewModel @Inject constructor(
 
     private fun handleResult(
         state: MutableState<ListDisplayState<Track>>,
-        result: Resource<List<Track>>
+        result: Resource<List<Track>>,
+        filterable: Boolean = false,
+        filterableOptions: Map<String, String> = emptyMap()
     ) {
         when (result) {
             is Resource.Success -> {
                 state.value =
-                    ListDisplayState(data = result.data ?: emptyList())
+                    ListDisplayState(
+                        data = result.data ?: emptyList(),
+                        filterable = filterable,
+                        filterableOptions = filterableOptions
+                    )
             }
 
             is Resource.Error -> {
@@ -106,9 +117,23 @@ class HomepageFeedViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun getPopularTracks() {
-        getPopularTracksUseCase().onEach { result ->
-            handleResult(_popularTracks, result)
+    fun getPopularTracks(
+        frequency: Map.Entry<String, String> =
+            mapOf("popularity_week" to "Popular weekly").entries.first()
+    ) {
+        getPopularTracksUseCase(frequency.key).onEach { result ->
+            handleResult(
+                _popularTracks,
+                result,
+                filterable = true,
+                filterableOptions = mapOf(
+                    "popularity_week" to "Popular weekly",
+                    "popularity_month" to "Popular monthly",
+                    "popularity_total" to "Popular all-time"
+                )
+            ).also {
+                _filterableTitle.value = frequency.value
+            }
         }.launchIn(viewModelScope)
     }
 

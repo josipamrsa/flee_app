@@ -27,6 +27,7 @@ fun HomepageFeedScreen(
     viewModel: HomepageFeedViewModel = hiltViewModel(),
 ) {
     val nowPlayingTrack by viewModel.isNowPlayingTrack.collectAsState()
+    val filterableTitle by viewModel.filterableTitle.collectAsState()
 
     val trackMap = mapOf(
         "Featured" to viewModel.featuredTracks.value,
@@ -37,6 +38,10 @@ fun HomepageFeedScreen(
     HomepageFeedBody(
         trackMap = trackMap,
         trackPlaying = nowPlayingTrack,
+        filterableTitle = filterableTitle,
+        onFilterableClicked = { frequency ->
+            viewModel.getPopularTracks(frequency)
+        },
         onTrackClick = { },
         onTrackDoubleClick = { trackState ->
             viewModel.onSetNowPlayingTrack(trackState).also {
@@ -50,6 +55,8 @@ fun HomepageFeedScreen(
 fun HomepageFeedBody(
     trackMap: Map<String, ListDisplayState<Track>>,
     trackPlaying: PreviewTrackState<Track>,
+    filterableTitle: String,
+    onFilterableClicked: (Map.Entry<String, String>) -> Unit,
     onTrackClick: () -> Unit,
     onTrackDoubleClick: (Track) -> Unit,
 ) {
@@ -66,6 +73,8 @@ fun HomepageFeedBody(
                 title = trackList.key,
                 tracks = trackList.value,
                 trackPlaying = trackPlaying,
+                filterableTitle = filterableTitle,
+                onFilterableClicked = onFilterableClicked,
                 onTrackClick = onTrackClick,
                 onTrackDoubleClick = { onTrackDoubleClick(it) }
             )
