@@ -12,6 +12,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -20,6 +25,7 @@ import coil.compose.AsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
 import com.example.fleeapp.R
+import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
 
 @Composable
 fun AsyncImageSimpleItem(
@@ -54,11 +60,14 @@ fun AsyncImageItem(
         CircularProgressIndicator()
     },
     initialState: AsyncImagePainter.State = AsyncImagePainter.State.Empty,
-    contentScale: ContentScale = ContentScale.Inside
+    contentScale: ContentScale = ContentScale.Inside,
+    shouldOverlay: Boolean
 ) {
     var painterState by remember {
         mutableStateOf(initialState)
     }
+
+    var overlayColor = FleeMainTheme.colors.backgroundPrimary
 
     Box(
         contentAlignment = Alignment.Center,
@@ -67,10 +76,28 @@ fun AsyncImageItem(
         AsyncImage(
             model = model,
             contentDescription = contentDescription,
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .drawWithCache {
+                    onDrawWithContent {
+                        drawContent()
+                        if (shouldOverlay) {
+                            drawRect(
+                                Brush.verticalGradient(
+                                    0f to overlayColor.copy(alpha = 0.35f),
+                                    .3f to overlayColor.copy(alpha = 0.7f),
+                                    1f to overlayColor.copy(alpha = 1f)
+                                )
+                            )
+                        }
+                    }
+                },
             onState = { painterState = it },
             contentScale = contentScale,
             alignment = Alignment.TopStart,
+            colorFilter = if (shouldOverlay)
+                ColorFilter.tint(FleeMainTheme.colors.backgroundPrimary, blendMode = BlendMode.Color)
+            else null
         )
 
         when (painterState) {
@@ -100,7 +127,8 @@ fun AsyncAdjustableImageItem(
         CircularProgressIndicator()
     },
     initialState: AsyncImagePainter.State = AsyncImagePainter.State.Empty,
-    contentScale: ContentScale = ContentScale.Fit
+    contentScale: ContentScale = ContentScale.Fit,
+    shouldOverlay: Boolean = false
 ) {
     val context = LocalContext.current
 
@@ -116,7 +144,8 @@ fun AsyncAdjustableImageItem(
         contentScale = contentScale,
         placeholder = placeholder,
         loading = loading,
-        initialState = initialState
+        initialState = initialState,
+        shouldOverlay = shouldOverlay
     )
 }
 
