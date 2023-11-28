@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
@@ -28,6 +30,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.fleeapp.domain.model.tracks.Track
 import com.example.fleeapp.presentation.base_ui.DataErrorHandler
@@ -39,20 +42,19 @@ import com.example.fleeapp.presentation.homepage_feed.states.PreviewTrackState
 @Composable
 fun Filterable(
     title: String,
-    options: List<String>,
-    onFilterableClicked: () -> Unit
+    options: Map<String, String>,
+    onFilterableClicked: (Map.Entry<String, String>) -> Unit
 ) {
     var expanded by remember {
         mutableStateOf(false)
     }
 
-    var filterTitle by remember {
+    /*var filterTitle by remember {
         mutableStateOf(title)
-    }
+    }*/
 
-    fun filterData(option: String) {
-        filterTitle = option
-        onFilterableClicked()
+    fun filterData(option: Map.Entry<String, String>) {
+        onFilterableClicked(option)
         expanded = false
     }
 
@@ -80,7 +82,7 @@ fun Filterable(
         ) {
 
             Text(
-                text = filterTitle,
+                text = title,
                 style = FleeMainTheme.typography.h6,
                 color = FleeMainTheme.colors.textAccentPrimary,
                 modifier = Modifier
@@ -119,7 +121,7 @@ fun Filterable(
                     DropdownMenuItem(
                         text = {
                             Text(
-                                text = option,
+                                text = option.value,
                                 style = FleeMainTheme.typography.h6,
                             )
                         },
@@ -153,39 +155,43 @@ fun HorizontalTrackList(
     title: String,
     trackPlaying: PreviewTrackState<Track>,
     tracks: ListDisplayState<Track>,
-    onFilterableClicked: () -> Unit,
+    filterableTitle: String,
+    onFilterableClicked: (Map.Entry<String, String>) -> Unit,
     onTrackClick: () -> Unit,
     onTrackDoubleClick: (Track) -> Unit,
 ) {
-
-    if (tracks.filterable)
-        Filterable(
-            title = title,
-            options = tracks.filterableOptions,
-            onFilterableClicked = onFilterableClicked
-        )
-    else NonFilterable(title = title)
-
-    LazyRow(modifier = Modifier.fillMaxWidth()) {
-        items(tracks.data) { wrapped ->
-            wrapped.let { it ->
-                RowTrackItem(
-                    track = it,
-                    trackPlaying = trackPlaying,
-                    onTrackClick = onTrackClick,
-                    onTrackDoubleClick = {
-                        onTrackDoubleClick(it)
-                    }
-                )
-            }
-        }
-    }
 
     if (tracks.error.isNotBlank()) {
         DataErrorHandler(error = tracks.error)
     }
 
     if (tracks.isLoading) {
+        // TODO shimmerlayout
         DataLoaderDisplay()
+    }
+
+    else {
+        if (tracks.filterable)
+            Filterable(
+                title = filterableTitle,
+                options = tracks.filterableOptions,
+                onFilterableClicked = onFilterableClicked
+            )
+        else NonFilterable(title = title)
+
+        LazyRow(modifier = Modifier.fillMaxWidth()) {
+            items(tracks.data) { wrapped ->
+                wrapped.let { it ->
+                    RowTrackItem(
+                        track = it,
+                        trackPlaying = trackPlaying,
+                        onTrackClick = onTrackClick,
+                        onTrackDoubleClick = {
+                            onTrackDoubleClick(it)
+                        }
+                    )
+                }
+            }
+        }
     }
 }

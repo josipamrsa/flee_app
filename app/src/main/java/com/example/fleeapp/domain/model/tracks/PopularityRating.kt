@@ -10,4 +10,11 @@ enum class PopularityRating {
     constructor(frequency: String) {
         this.frequency = frequency
     }
+
+    companion object {
+        // call function from() without using period and/or brackets
+        // much more like a natural language -> PopularityRating from frequency
+        infix fun from(value: String): PopularityRating? =
+            PopularityRating.values().firstOrNull() { it.frequency == value }
+    }
 }

@@ -15,12 +15,14 @@ class GetPopularTracksUseCase @Inject constructor(
     private val repository: TrackRepository
 ) {
     operator fun invoke(
-        popularityRating: PopularityRating = PopularityRating.POPULARITY_WEEK
+        frequency: String = "popularity_week"
     ): Flow<Resource<List<Track>>> =
         flow {
             try {
                 emit(Resource.Loading<List<Track>>())
-                val tracks = repository.getPopularTracks(popularityRating).map { it.toTrack() }
+                val tracks =
+                    (PopularityRating from frequency)
+                        ?.let { repository.getPopularTracks(it).map { it.toTrack() } }
                 emit(Resource.Success<List<Track>>(tracks))
             } catch (e: HttpException) {
                 emit(Resource.Error<List<Track>>(e.localizedMessage ?: "An unexpected error occured"))
