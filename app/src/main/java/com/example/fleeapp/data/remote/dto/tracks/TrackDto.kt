@@ -51,6 +51,8 @@ data class TrackDto(
 
 fun TrackDto.toTrack(): Track {
     return Track(
+        albumImage = albumImage,
+        albumName = albumName,
         artistId = artistId,
         artistName = artistName,
         duration = duration,
@@ -58,6 +60,7 @@ fun TrackDto.toTrack(): Track {
         image = image,
         musicInfo = musicInfo,
         name = name,
+        releaseDate = releaseDate,
         shortUrl = shortUrl,
         audio = audio
     )

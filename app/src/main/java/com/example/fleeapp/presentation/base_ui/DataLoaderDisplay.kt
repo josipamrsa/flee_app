@@ -30,17 +30,6 @@ fun DataLoaderDisplay() {
 
         ) {
         Row(
-            modifier = Modifier
-                .background(
-                    color = FleeMainTheme.colors.backgroundSecondary,
-                    shape = RoundedCornerShape(10.dp)
-                )
-                .padding(
-                    top = 20.dp,
-                    bottom = 20.dp,
-                    start = 30.dp,
-                    end = 30.dp
-                ),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
