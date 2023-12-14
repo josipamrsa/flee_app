@@ -1,9 +1,12 @@
 package com.example.fleeapp.di
 
+import android.app.Application
 import android.content.Context
 import android.media.AudioAttributes
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.room.Room
 import com.example.fleeapp.BuildConfig
+import com.example.fleeapp.data.data_source.FleeDatabase
 import com.example.fleeapp.data.remote.JamendoApi
 import com.example.fleeapp.data.repository.TrackRepositoryImpl
 import com.example.fleeapp.domain.repository.TrackRepository
@@ -23,6 +26,15 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+    @Provides
+    @Singleton
+    fun provideFleeRoomDatabase(app: Application): FleeDatabase {
+        return Room.databaseBuilder(
+            app,
+            FleeDatabase::class.java,
+            FleeDatabase.DATABASE_NAME
+        ).build()
+    }
 
     @Provides
     @Singleton
