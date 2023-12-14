@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.fleeapp.domain.model.tracks.Track
-import com.example.fleeapp.presentation.base_ui.AsyncAdjustableImageItem
-import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
+import com.example.fleeapp.presentation.common_ui.AsyncAdjustableImageItem
+import com.example.fleeapp.presentation.common_ui.theme.flee_main.FleeMainTheme
 import com.example.fleeapp.presentation.homepage_feed.states.PreviewTrackState
 
 

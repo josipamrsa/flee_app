@@ -1,4 +1,4 @@
-package com.example.fleeapp.presentation.base_ui
+package com.example.fleeapp.presentation.common_ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

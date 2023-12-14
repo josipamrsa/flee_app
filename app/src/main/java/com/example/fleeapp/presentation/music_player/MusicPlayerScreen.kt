@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
+import com.example.fleeapp.presentation.common_ui.theme.flee_main.FleeMainTheme
 
 @Composable
 fun MusicPlayerScreen(

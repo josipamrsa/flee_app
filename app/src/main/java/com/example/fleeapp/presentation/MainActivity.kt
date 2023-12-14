@@ -6,8 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.fleeapp.common.media_player.AudioPlayerImpl
-import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
+import com.example.fleeapp.presentation.common_ui.theme.flee_main.FleeMainTheme
 import com.example.fleeapp.presentation.navigation.AppNavigation
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -9,12 +9,11 @@ import androidx.media3.common.Player
 import com.example.fleeapp.FleeApplication
 import com.example.fleeapp.common.Resource
 import com.example.fleeapp.common.media_player.AudioPlayerImpl
-import com.example.fleeapp.domain.model.tracks.PopularityRating
 import com.example.fleeapp.domain.model.tracks.Track
 import com.example.fleeapp.domain.use_case.get_acoustic_only_tracks.GetAcousticOnlyTracksUseCase
 import com.example.fleeapp.domain.use_case.get_featured_tracks.GetFeaturedTracksUseCase
 import com.example.fleeapp.domain.use_case.get_popular_tracks.GetPopularTracksUseCase
-import com.example.fleeapp.presentation.base_ui.ListDisplayState
+import com.example.fleeapp.presentation.common_ui.ListDisplayState
 import com.example.fleeapp.presentation.homepage_feed.states.PreviewTrackState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogWindowProvider
 import com.example.fleeapp.domain.model.tracks.Track
-import com.example.fleeapp.presentation.base_ui.AsyncAdjustableImageItem
-import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
+import com.example.fleeapp.presentation.common_ui.AsyncAdjustableImageItem
+import com.example.fleeapp.presentation.common_ui.theme.flee_main.FleeMainTheme
 import java.text.SimpleDateFormat
 
 @Composable

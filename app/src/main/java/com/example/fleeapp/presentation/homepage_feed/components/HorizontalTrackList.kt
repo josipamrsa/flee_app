@@ -6,10 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
@@ -21,7 +18,6 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MenuDefaults
-import androidx.compose.material3.MenuItemColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,13 +26,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.fleeapp.domain.model.tracks.Track
-import com.example.fleeapp.presentation.base_ui.DataErrorHandler
-import com.example.fleeapp.presentation.base_ui.DataLoaderDisplay
-import com.example.fleeapp.presentation.base_ui.ListDisplayState
-import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
+import com.example.fleeapp.presentation.common_ui.DataErrorHandler
+import com.example.fleeapp.presentation.common_ui.DataLoaderDisplay
+import com.example.fleeapp.presentation.common_ui.ListDisplayState
+import com.example.fleeapp.presentation.common_ui.theme.flee_main.FleeMainTheme
 import com.example.fleeapp.presentation.homepage_feed.states.PreviewTrackState
 
 @Composable
