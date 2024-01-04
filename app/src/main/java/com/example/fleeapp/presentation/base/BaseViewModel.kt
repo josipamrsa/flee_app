@@ -8,10 +8,14 @@ import com.example.fleeapp.common.trySuspended
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 abstract class BaseViewModel : ViewModel() {
@@ -53,8 +57,8 @@ abstract class BaseViewModel : ViewModel() {
         mutableUIState.emit(loadingState)
         return trySuspendedWithErrorHandling(action).let {
             if (successState != null)
-                // if successState is not null, check if result is failure
-                // or success, and then exec let {} block accordingly
+            // if successState is not null, check if result is failure
+            // or success, and then exec let {} block accordingly
                 it.getOrNull()?.let { mutableUIState.emit(successState) }
         }
     }
@@ -66,6 +70,13 @@ abstract class BaseViewModel : ViewModel() {
         // TIL {} syntax - no return value
         // assign = syntax - return value
         coroutineScope.launch { action() }
+    }
+
+    protected fun <T> launchOn(
+        flow: Flow<T>,
+        coroutineScope: CoroutineScope = viewModelScope,
+    ) {
+        flow.launchIn(coroutineScope)
     }
 
     protected fun launchWithProgressIn(
@@ -104,3 +115,8 @@ interface UIState {
     data class Success<out R>(val res: R) : UIState
 }
 
+sealed class Resource<T>(val data: T? = null, val message: String? = null) {
+    class Success<T>(data: T?) : Resource<T>(data)
+    class Error<T>(message: String, data: T? = null) : Resource<T>(data, message)
+    class Loading<T>(data: T? = null) : Resource<T>(data)
+}

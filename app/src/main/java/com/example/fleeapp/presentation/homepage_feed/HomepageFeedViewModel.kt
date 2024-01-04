@@ -18,10 +18,17 @@ import com.example.fleeapp.presentation.base.BaseViewModel
 import com.example.fleeapp.presentation.common_ui.ListDisplayState
 import com.example.fleeapp.presentation.homepage_feed.states.PreviewTrackState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -112,19 +119,20 @@ class HomepageFeedViewModel @Inject constructor(
         }
     }
 
+
     private fun getFeaturedTracks() {
-        launchIn {
+        launchOn(
             getFeaturedTracksUseCase().onEach { result ->
                 handleResult(_featuredTracks, result)
             }
-        }
+        )
     }
 
     fun getPopularTracks(
         frequency: Map.Entry<String, String> =
             mapOf("popularity_week" to "Popular weekly").entries.first()
     ) {
-        launchIn {
+        launchOn(
             getPopularTracksUseCase(frequency.key).onEach { result ->
                 handleResult(
                     _popularTracks,
@@ -139,15 +147,16 @@ class HomepageFeedViewModel @Inject constructor(
                     _filterableTitle.value = frequency.value
                 }
             }
-        }
+        )
+
     }
 
     private fun getAcousticOnlyTracks() {
-        launchIn {
+        launchOn(
             getAcousticOnlyTracksUseCase().onEach { result ->
                 handleResult(_acousticOnlyTracks, result)
             }
-        }
+        )
     }
 
     fun onSetNowPlayingTrack(track: Track) {
