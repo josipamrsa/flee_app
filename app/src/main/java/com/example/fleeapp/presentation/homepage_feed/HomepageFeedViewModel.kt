@@ -3,6 +3,7 @@ package com.example.fleeapp.presentation.homepage_feed
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.Player
@@ -13,6 +14,7 @@ import com.example.fleeapp.domain.model.tracks.Track
 import com.example.fleeapp.domain.use_case.get_acoustic_only_tracks.GetAcousticOnlyTracksUseCase
 import com.example.fleeapp.domain.use_case.get_featured_tracks.GetFeaturedTracksUseCase
 import com.example.fleeapp.domain.use_case.get_popular_tracks.GetPopularTracksUseCase
+import com.example.fleeapp.presentation.base.BaseViewModel
 import com.example.fleeapp.presentation.common_ui.ListDisplayState
 import com.example.fleeapp.presentation.homepage_feed.states.PreviewTrackState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,7 +30,7 @@ class HomepageFeedViewModel @Inject constructor(
     private val getPopularTracksUseCase: GetPopularTracksUseCase,
     private val getAcousticOnlyTracksUseCase: GetAcousticOnlyTracksUseCase
 
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _featuredTracks =
         mutableStateOf<ListDisplayState<Track>>(ListDisplayState())
@@ -111,35 +113,41 @@ class HomepageFeedViewModel @Inject constructor(
     }
 
     private fun getFeaturedTracks() {
-        getFeaturedTracksUseCase().onEach { result ->
-            handleResult(_featuredTracks, result)
-        }.launchIn(viewModelScope)
+        launchIn {
+            getFeaturedTracksUseCase().onEach { result ->
+                handleResult(_featuredTracks, result)
+            }
+        }
     }
 
     fun getPopularTracks(
         frequency: Map.Entry<String, String> =
             mapOf("popularity_week" to "Popular weekly").entries.first()
     ) {
-        getPopularTracksUseCase(frequency.key).onEach { result ->
-            handleResult(
-                _popularTracks,
-                result,
-                filterable = true,
-                filterableOptions = mapOf(
-                    "popularity_week" to "Popular weekly",
-                    "popularity_month" to "Popular monthly",
-                    "popularity_total" to "Popular all-time"
-                )
-            ).also {
-                _filterableTitle.value = frequency.value
+        launchIn {
+            getPopularTracksUseCase(frequency.key).onEach { result ->
+                handleResult(
+                    _popularTracks,
+                    result,
+                    filterable = true,
+                    filterableOptions = mapOf(
+                        "popularity_week" to "Popular weekly",
+                        "popularity_month" to "Popular monthly",
+                        "popularity_total" to "Popular all-time"
+                    )
+                ).also {
+                    _filterableTitle.value = frequency.value
+                }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     private fun getAcousticOnlyTracks() {
-        getAcousticOnlyTracksUseCase().onEach { result ->
-            handleResult(_acousticOnlyTracks, result)
-        }.launchIn(viewModelScope)
+        launchIn {
+            getAcousticOnlyTracksUseCase().onEach { result ->
+                handleResult(_acousticOnlyTracks, result)
+            }
+        }
     }
 
     fun onSetNowPlayingTrack(track: Track) {
