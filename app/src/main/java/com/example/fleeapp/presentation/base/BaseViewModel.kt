@@ -104,7 +104,6 @@ abstract class BaseViewModel : ViewModel() {
     ) = this.invokeOnCompletion {
         coroutineScope.launch { action() }
     }
-
 }
 
 
