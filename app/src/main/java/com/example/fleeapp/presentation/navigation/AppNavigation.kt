@@ -12,7 +12,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
+import com.example.fleeapp.presentation.common_ui.theme.flee_main.FleeMainTheme
 import com.example.fleeapp.presentation.navigation.bottom_navigation.BottomNavigationBar
 import com.example.fleeapp.presentation.navigation.components.NavigationGraph
 

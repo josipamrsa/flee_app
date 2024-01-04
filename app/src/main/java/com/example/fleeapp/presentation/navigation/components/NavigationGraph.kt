@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import com.example.fleeapp.presentation.Screen
 import com.example.fleeapp.presentation.homepage_feed.HomepageFeedScreen
 import com.example.fleeapp.presentation.music_player.MusicPlayerScreen
-import com.example.fleeapp.presentation.base_ui.animations.SlideAnimation
+import com.example.fleeapp.presentation.common_ui.animations.SlideAnimation
 import com.example.fleeapp.presentation.playlist_manager.PlaylistManagerScreen
 import com.example.fleeapp.presentation.track_discovery.TrackDiscoveryScreen
 

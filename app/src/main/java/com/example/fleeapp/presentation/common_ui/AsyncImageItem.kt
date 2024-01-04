@@ -1,4 +1,4 @@
-package com.example.fleeapp.presentation.base_ui
+package com.example.fleeapp.presentation.common_ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -25,7 +25,7 @@ import coil.compose.AsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
 import com.example.fleeapp.R
-import com.example.fleeapp.presentation.base_ui.theme.flee_main.FleeMainTheme
+import com.example.fleeapp.presentation.common_ui.theme.flee_main.FleeMainTheme
 
 @Composable
 fun AsyncImageSimpleItem(

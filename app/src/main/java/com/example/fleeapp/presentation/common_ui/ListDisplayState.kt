@@ -1,4 +1,4 @@
-package com.example.fleeapp.presentation.base_ui
+package com.example.fleeapp.presentation.common_ui
 
 open class ListDisplayState<T>(
     open val isLoading: Boolean = false,
